@@ -7,18 +7,24 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BjornsRadioExcelExport.Data;
 using BjornsRadioExcelExport.Models;
+using ClosedXML.Excel;
+using ClosedXML.Extensions;
 
 namespace BjornsRadioExcelExport.Controllers
 {
     public class AlbumsController : Controller
     {
+        #region *** Constructors and properties ********************************
         private readonly BjornsRadioContext _context;
 
         public AlbumsController(BjornsRadioContext context)
         {
             _context = context;
         }
+        #endregion
 
+
+        #region *** Index and Details ******************************************
         // GET: Albums
         public async Task<IActionResult> Index()
         {
@@ -45,7 +51,10 @@ namespace BjornsRadioExcelExport.Controllers
 
             return View(album);
         }
+        #endregion
 
+
+        #region *** Create *****************************************************
         // GET: Albums/Create
         public IActionResult Create()
         {
@@ -71,7 +80,10 @@ namespace BjornsRadioExcelExport.Controllers
             ViewData["Media"] = new SelectList(_context.MediaTypes, "Id", "Id", album.Media);
             return View(album);
         }
+        #endregion
 
+
+        #region *** Edit *******************************************************
         // GET: Albums/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -126,7 +138,10 @@ namespace BjornsRadioExcelExport.Controllers
             ViewData["Media"] = new SelectList(_context.MediaTypes, "Id", "Id", album.Media);
             return View(album);
         }
+        #endregion
 
+
+        #region *** Delete *****************************************************
         // GET: Albums/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -161,10 +176,40 @@ namespace BjornsRadioExcelExport.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        #endregion
 
+
+        #region *** ExportToExcel **********************************************
+        public IActionResult ExportToExcel()
+        {
+            string dateString = String.Format("{0:dd MMM yyyy}", new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day));
+
+            using (var wb = GenerateWorkbook())
+            {
+                return wb.Deliver($"Albums_{dateString}.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            }
+        }
+        #endregion
+
+
+        #region *** Helper methods *********************************************
         private bool AlbumExists(int id)
         {
             return _context.Albums.Any(e => e.Id == id);
         }
+
+        private XLWorkbook GenerateWorkbook()
+        {
+            var query = from album in _context.Albums
+                        select album;
+
+            // Create workbook and worksheet
+            XLWorkbook wb = new XLWorkbook();
+            var ws = wb.Worksheets.Add("Albums");
+            ws.Cell(1, 1).InsertTable(query);
+
+            return wb;
+        }
+        #endregion
     }
 }
