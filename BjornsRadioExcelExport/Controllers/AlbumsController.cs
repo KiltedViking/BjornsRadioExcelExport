@@ -9,6 +9,7 @@ using BjornsRadioExcelExport.Data;
 using BjornsRadioExcelExport.Models;
 using ClosedXML.Excel;
 using ClosedXML.Extensions;
+using BjornsRadioExcelExport.ViewModels;
 
 namespace BjornsRadioExcelExport.Controllers
 {
@@ -28,7 +29,18 @@ namespace BjornsRadioExcelExport.Controllers
         // GET: Albums
         public async Task<IActionResult> Index()
         {
-            var bjornsRadioContext = _context.Albums.Include(a => a.GenreNavigation).Include(a => a.MediaNavigation);
+            var bjornsRadioContext = _context.Albums
+                .Include(a => a.GenreNavigation)
+                .Include(a => a.MediaNavigation)
+                .Include(a => a.Songs);
+                //.Select(a => new {
+                //    a.Id,
+                //    a.Artist,
+                //    a.Title,
+                //    a.ReleaseYear,
+                //    a.GenreNavigation,
+                //    Songs = a.Songs.AsEnumerable().Aggregate("Songs: ", (curr, next) => curr + ", " + next.Title)
+                //});
             return View(await bjornsRadioContext.ToListAsync());
         }
 
@@ -179,16 +191,26 @@ namespace BjornsRadioExcelExport.Controllers
         #endregion
 
 
+        #region *** Custom actions *********************************************
+
         #region *** ExportToExcel **********************************************
+        /// <summary>
+        /// Action for exporting albums to an Excel document
+        /// </summary>
+        /// <returns>An Excel file with all albums</returns>
         public IActionResult ExportToExcel()
         {
-            string dateString = String.Format("{0:dd MMM yyyy}", new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day));
+            // Generate date string for filename
+            string dateString = String.Format("{0:yyyy_MMM_dd}", new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day));
 
+            // Get Excel file and return to client
             using (var wb = GenerateWorkbook())
             {
                 return wb.Deliver($"Albums_{dateString}.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             }
         }
+        #endregion
+
         #endregion
 
 
@@ -198,12 +220,26 @@ namespace BjornsRadioExcelExport.Controllers
             return _context.Albums.Any(e => e.Id == id);
         }
 
+
+        /// <summary>
+        /// Generates an Excel file from albums
+        /// </summary>
+        /// <returns>Excel file with all albums</returns>
         private XLWorkbook GenerateWorkbook()
         {
-            var query = from album in _context.Albums
-                        select album;
+            var query = from album in _context.Albums.Include(a => a.Songs)
+                        select new AlbumExportViewModel()
+                        {
+                            Id = album.Id,
+                            Artist = album.Artist,
+                            Title = album.Title,
+                            ReleaseYear = album.ReleaseYear,
+                            Genre = album.GenreNavigation.GenreName,
+                            Media = album.MediaNavigation.TypeName,
+                            SongsList = album.SongsCsv
+                        };
 
-            // Create workbook and worksheet
+            // Create workbook and worksheet, and add data to worksheet
             XLWorkbook wb = new XLWorkbook();
             var ws = wb.Worksheets.Add("Albums");
             ws.Cell(1, 1).InsertTable(query);

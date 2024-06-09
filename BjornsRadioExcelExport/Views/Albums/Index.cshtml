@@ -31,6 +31,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.MediaNavigation)
             </th>
+            <th>
+                Songs
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -51,10 +54,16 @@
                     @Html.DisplayFor(modelItem => item.Comments)
                 </td> *@
                 <td>
-                    @Html.DisplayFor(modelItem => item.GenreNavigation.Id)
+                    @Html.DisplayFor(modelItem => item.GenreNavigation.GenreName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.MediaNavigation.TypeName)
+                </td>
+                <td>
+                    @* @Html.DisplayFor(modelItem => item.Songs) *@
+                    @Html.DisplayFor(modelItem => item.SongsCsv)
+                    @* @Html.DisplayFor(modelItem => item.Songs.Aggregate("", (curr, song) => curr + ", " + song.Title)) *@
+                    @* @Model.Songs.Aggregate("Songs", (curr, next) => curr + ", " + next.Title) *@
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Edit</a>
