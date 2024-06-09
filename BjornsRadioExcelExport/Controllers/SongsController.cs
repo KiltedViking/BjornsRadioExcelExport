@@ -12,6 +12,7 @@ namespace BjornsRadioExcelExport.Controllers
 {
     public class SongsController : Controller
     {
+        #region *** Constructors and properties ********************************
         private readonly BjornsRadioContext _context;
 
         public SongsController(BjornsRadioContext context)
@@ -19,12 +20,17 @@ namespace BjornsRadioExcelExport.Controllers
             _context = context;
         }
 
+        #endregion
+
+
+        #region *** Index and Details ******************************************
         // GET: Songs
         public async Task<IActionResult> Index()
         {
             var bjornsRadioContext = _context.Songs.Include(s => s.AlbumNavigation);
             return View(await bjornsRadioContext.ToListAsync());
         }
+
 
         // GET: Songs/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -44,7 +50,10 @@ namespace BjornsRadioExcelExport.Controllers
 
             return View(song);
         }
+        #endregion
 
+
+        #region *** Create *****************************************************
         // GET: Songs/Create
         public IActionResult Create()
         {
@@ -68,7 +77,10 @@ namespace BjornsRadioExcelExport.Controllers
             ViewData["Album"] = new SelectList(_context.Albums, "Id", "Id", song.Album);
             return View(song);
         }
+        #endregion
 
+
+        #region *** Edit *******************************************************
         // GET: Songs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -121,7 +133,10 @@ namespace BjornsRadioExcelExport.Controllers
             ViewData["Album"] = new SelectList(_context.Albums, "Id", "Id", song.Album);
             return View(song);
         }
+        #endregion
 
+
+        #region *** Delete *****************************************************
         // GET: Songs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -155,10 +170,14 @@ namespace BjornsRadioExcelExport.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        #endregion
 
+
+        #region *** Helper methods *********************************************
         private bool SongExists(int id)
         {
             return _context.Songs.Any(e => e.Id == id);
         }
+        #endregion
     }
 }

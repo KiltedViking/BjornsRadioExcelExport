@@ -55,6 +55,7 @@ namespace BjornsRadioExcelExport.Controllers
             var album = await _context.Albums
                 .Include(a => a.GenreNavigation)
                 .Include(a => a.MediaNavigation)
+                .Include(a => a.Songs)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (album == null)
             {

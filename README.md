@@ -1,1 +1,39 @@
 # BjornsRadioExcelExport
+
+Project to test export to spreadsheet using NuGet packages ClosedXML and ClosedXML.Extensions.Mvc plus using `Aggregate()` method in LINQ to create a string out of child entities (songs) to a parent entity (album).
+
+Project is built using an existing database and using Microsoft's Entity Framework to generate model classes and context class, and then customising using partial classes and "meta data classes" to add attributes to properties of model classes, to avoid overwriting any customisations should model be regenerated.
+
+## Data model
+
+### Album
+
+* `Id` - unique identifier for album.
+* `Artist` - name of group or artist.
+* `Title` - name of album.
+* `ReleaseYear` - year that album was released.
+* `Genre` - reference to genre of album.
+* `Media` - media of album, e.g. CD.
+* `Comments` - any comments on album.
+ 
+ ### Song
+
+ * `Id` - unique identifier for song.
+ * `Album` - reference to album song in on.
+ * `AlbumOrder` - order in which song appears on album.
+ * `Title` - name of song.
+ * `Comments` - any comments on song.
+
+ ### Genre
+
+ * `Id` - unique identifier for genre.
+ * `GenreName` - name of genre, e.g. Pop and Rock.
+
+ ### Media
+
+ * `Id` - unique identifier for media.
+ * `TypeName` - name of media, e.g. CD or Vinyl.
+
+---
+
+Björn G. D. Persson, kiltedviking.net
