@@ -28,11 +28,22 @@ Project is built using an existing database and using Microsoft's Entity Framewo
 
  * `Id` - unique identifier for genre.
  * `GenreName` - name of genre, e.g. Pop and Rock.
+ * `Comments` - any comments on genre.
 
  ### Media
 
  * `Id` - unique identifier for media.
  * `TypeName` - name of media, e.g. CD or Vinyl.
+ * `Comments` - any comments on media.
+
+## Set up project
+
+Below are steps on how to set up project.
+
+* Clone repository.
+* Open solution in Visual Studio (I used Community 2022 edition).
+* Right-click file `libman.json` and select Restore Client-Side Libraries (to download bootstrap-icons, etc., or action buttons will look strange ;-)).
+* Add connection string  `BjornsRadioConnection` for database - recommended is using user secrets, i.e. right-click project and select Manage User Secrets. (Tip: Add data connection to database in VS's Server Explorer pane and then copy connection string from the created connection's properties.)
 
 ---
 
