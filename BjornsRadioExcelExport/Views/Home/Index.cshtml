@@ -3,6 +3,25 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to Björn's Radio</h1>
+    <p>This is an ASP.NET Core 8 MVC project for testing NuGet packages ClosedXML 
+        and ClosedXML.Extensions.Xml (and learning to fix some problems on the way ;-)).</p>
+
+    <h2>ClosedXML</h2>
+    <p>Package is tested in controllers Albums and Playlists - the former also testing 
+        a 1:M relationship data (Album with Songs) and the latter M.M relationship 
+        data (Playlist with Songs).</p>
+
+    <h2>Using view model when validation fails for navigation property</h2>
+    <p>Creation of SongRequest fails as navigation property isn't set, so using a 
+        view model without navigation property solves it.</p>
+
+    <h2>And more...</h2>
+    <p>Client-side package <code>bootstrap-icons</code> is added using <code>libman.json</code> 
+        (and added to <code>.gitignore</code>).</p>
+    <p>Links are made into buttons (using Bootstrap framework).</p>
+
+    <h2>Learn more</h2>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core" target="_blank">building 
+        Web apps with ASP.NET Core</a>.</p>
 </div>
