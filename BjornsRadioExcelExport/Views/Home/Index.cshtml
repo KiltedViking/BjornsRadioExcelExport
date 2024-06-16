@@ -4,24 +4,46 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome to Björn's Radio</h1>
-    <p>This is an ASP.NET Core 8 MVC project for testing NuGet packages ClosedXML 
-        and ClosedXML.Extensions.Xml (and learning to fix some problems on the way ;-)).</p>
+    <p>
+        This is an ASP.NET Core 8 MVC project for testing NuGet packages ClosedXML
+        and ClosedXML.Extensions.Xml (and learning to fix some problems on the way ;-)).
+    </p>
+</div>
 
-    <h2>ClosedXML</h2>
-    <p>Package is tested in controllers Albums and Playlists - the former also testing 
-        a 1:M relationship data (Album with Songs) and the latter M.M relationship 
-        data (Playlist with Songs).</p>
+<div class="row">
+    <div class="col-md-4">
+        <h2>ClosedXML</h2>
+        <p>
+            NuGet package ClosedXML can be used to export to spreadsheet and is tested 
+            in controllers Albums and Playlists - the former also testing aggregating data from
+            a 1:M relationship (Songs on Album) and the latter a M.M relationship
+            data (Songs in Playlist).
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>Validation fails on create</h2>
+        <p>
+            Creation of SongRequest fails as navigation property isn't set, so using a
+            view model without navigation property solves it.
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>And more...</h2>
+        <ul>
+            <li>Client-side package <code>bootstrap-icons</code> is added using <code>libman.json</code>
+                (and then added to <code>.gitignore</code> to avoid uploading to repository).
+            </li>
+            <li>Links are made into buttons (using Bootstrap framework).</li>
+        </ul>
+    </div>
+</div>
 
-    <h2>Using view model when validation fails for navigation property</h2>
-    <p>Creation of SongRequest fails as navigation property isn't set, so using a 
-        view model without navigation property solves it.</p>
-
-    <h2>And more...</h2>
-    <p>Client-side package <code>bootstrap-icons</code> is added using <code>libman.json</code> 
-        (and added to <code>.gitignore</code>).</p>
-    <p>Links are made into buttons (using Bootstrap framework).</p>
-
+<div class="text-center">
     <h2>Learn more</h2>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core" target="_blank">building 
-        Web apps with ASP.NET Core</a>.</p>
+    <p>
+        Learn about <a href="https://learn.microsoft.com/aspnet/core" target="_blank">
+            building
+            Web apps with ASP.NET Core
+        </a>.
+    </p>
 </div>
