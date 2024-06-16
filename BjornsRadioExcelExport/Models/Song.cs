@@ -24,4 +24,10 @@ public partial class Song
     [ForeignKey("Album")]
     [InverseProperty("Songs")]
     public virtual Album AlbumNavigation { get; set; } = null!;
+
+    [InverseProperty("Song")]
+    public virtual ICollection<PlaylistSong> PlaylistSongs { get; set; } = new List<PlaylistSong>();
+
+    [InverseProperty("Song")]
+    public virtual ICollection<SongRequest> SongRequests { get; set; } = new List<SongRequest>();
 }

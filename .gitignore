@@ -3,6 +3,7 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Client frameworks (except those added by project template)
 BjornsRadioExcelExport/wwwroot/lib/bootstrap-icons/
 
 # User-specific files
