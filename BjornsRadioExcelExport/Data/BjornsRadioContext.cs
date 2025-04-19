@@ -30,8 +30,9 @@ public partial class BjornsRadioContext : DbContext
 
     public virtual DbSet<SongRequest> SongRequests { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Name=ConnectionStrings:BjornsRadioConnection");
+    // Added while generating using EF Tools, but moved to Program/StartUp for dependency injection (DI)
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //    => optionsBuilder.UseSqlServer("Name=ConnectionStrings:BjornsRadioConnection");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -4,7 +4,7 @@
     ViewData["Title"] = "Songs";
 }
 <div class="float-end">
-    <a asp-action="Create" class="btn btn-success">Create New</a>
+    <a asp-action="Create" class="btn btn-success"><i class="bi bi-plus-circle"></i> Create New</a>
 </div>
 
 <h1>@ViewData["Title"]</h1>
@@ -44,9 +44,11 @@
                     @Html.DisplayFor(modelItem => item.Comments)
                 </td> *@
                 <td style="width: 120px">
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm" title="Details"><i class="bi bi-info-circle"></i></a>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm" title="Edit"><i class="bi bi-pen"></i></a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm" title="Delete"><i class="bi bi-trash"></i></a>
+                    <div class="btn-group" role="group" aria-label="Actions for songs">
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm" title="Details"><i class="bi bi-info-circle"></i></a>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm" title="Edit"><i class="bi bi-pen"></i></a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm" title="Delete"><i class="bi bi-trash"></i></a>
+                    </div>
                 </td>
             </tr>
         }
